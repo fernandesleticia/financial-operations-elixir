@@ -1,7 +1,5 @@
-<section class="phx-hero">
-  <h1 class="text-5xl text-red"><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1> <!-- Add our CSS classes to the H1 tag here -->
-  <p>A productive web framework that<br/>does not compromise speed and maintainability.</p>
-</section>
-
-<!-- Code removed for readability -->
-</section>
+<div class="min-h-full min-w-full w-full h-auto fixed bg-cover" style="background-color: rgba(0, 49, 102, 0.3)">
+  <div class="text-center text-white pb-16">
+    <h1 class="font-sans font-bold text-center mt-32 text-grey-white text-5xl" style="text-shadow: 1px 1px 2px #0a0a0a">Welcome to Financial Operations!</h1>
+  </div>
+</div>
