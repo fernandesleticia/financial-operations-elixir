@@ -32,6 +32,16 @@
 ## Deploy
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
+## Mananging the style
+  * format the code base
+  ```bash
+  $ mix format
+  ```
+  * run `credo`
+  ```bash
+  $ mix credo
+  ```
+
 ## Learn more
 
   * Official website: http://www.phoenixframework.org/
