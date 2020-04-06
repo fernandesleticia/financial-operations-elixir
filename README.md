@@ -28,6 +28,10 @@
   ```bash
   $ mix test
   ```
+  * Get the test coverage
+  ```bash
+  $ mix test --cover
+  ``` 
 
 ## Deploy
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
