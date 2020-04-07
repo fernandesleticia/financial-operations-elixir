@@ -4,3 +4,8 @@ otp_release:
   - 21.0
 elixir:
   - 1.10.2
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database financial_operations_elixir_dev;' -U postgres
+  - cp config/dev.exs.travis config/dev.exs
