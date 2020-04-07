@@ -8,4 +8,3 @@ services:
   - postgresql
 before_script:
   - psql -c 'create database financial_operations_elixir_dev;' -U postgres
-  - cp config/dev.exs.travis config/dev.exs
