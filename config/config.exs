@@ -8,7 +8,12 @@
 use Mix.Config
 
 config :financial_operations_elixir,
-  ecto_repos: [FinancialOperationsElixir.Repo]
+  ecto_repos: [FinancialOperationsElixir.Repo],
+  generators: [binary_id: true]
+
+# Add support for microseconds at the DB level
+# this avoids having to configure it on every migration file
+config :financial_operations_elixir, FinancialOperationsElixir.Repo, migration_timestamps: [type: :utc_datetime_usec]
 
 # Configures the endpoint
 config :financial_operations_elixir, FinancialOperationsElixirWeb.Endpoint,
