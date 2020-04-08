@@ -1,4 +1,18 @@
-# Financial Operations Elixir
+## About
+  
+  Application built with elixir that performs financial operations with money within the same currency.
+  the system performs: 
+  * The split of financial transactions
+  * The exchange through a currency conversion operation.
+  * Validation for compliance with ISO 4217
+
+## Technologies
+  The application is built with:
+  * Elixir `1.10.2`, elixir official website: https://elixir-lang.org/
+  * Phoenix `1.4.11` , phoenix official website: http://www.phoenixframework.org/
+
+## Dependencies
+  * credo `~> 1.3` , found it at: https://github.com/rrrene/credo
 
 ## Setup
   * Install dependencies
@@ -22,6 +36,15 @@
   ```bash
   $ iex -S mix phx.server
   ```
+## Mananging the style
+  * format the code base
+  ```bash
+  $ mix format
+  ```
+  * run `credo`
+  ```bash
+  $ mix credo
+  ```
 
 ## Test
   * Run the tests
@@ -36,20 +59,10 @@
 ## Deploy
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Mananging the style
-  * format the code base
-  ```bash
-  $ mix format
-  ```
-  * run `credo`
-  ```bash
-  $ mix credo
-  ```
+## Releases
+* v1
 
-## Learn more
+## License
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+## Credits
+
