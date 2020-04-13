@@ -16,3 +16,6 @@ config :financial_operations_elixir, FinancialOperationsElixirWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Decreasing a bit the security settings in that specific environment to speed up the testing
+config :bcrypt_elixir, :log_rounds, 4

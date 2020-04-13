@@ -13,6 +13,7 @@
 
 ## Dependencies
   * credo `~> 1.3` , found it at: https://github.com/rrrene/credo
+  * bcrypt_elixir, `~> 2.0`, found it at: https://github.com/riverrun/bcrypt_elixir
 
 ## Setup
   * Install dependencies
