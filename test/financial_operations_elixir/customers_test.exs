@@ -65,4 +65,67 @@ defmodule FinancialOperationsElixir.CustomersTest do
       assert %Ecto.Changeset{} = Customers.change_person(person)
     end
   end
+
+  describe "companies" do
+    alias FinancialOperationsElixir.Customers.Company
+
+    @valid_attrs %{fantasy_name: "some fantasy_name", name: "some name", registration_number: "some registration_number"}
+    @update_attrs %{fantasy_name: "some updated fantasy_name", name: "some updated name", registration_number: "some updated registration_number"}
+    @invalid_attrs %{fantasy_name: nil, name: nil, registration_number: nil}
+
+    def company_fixture(attrs \\ %{}) do
+      {:ok, company} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Customers.create_company()
+
+      company
+    end
+
+    test "list_companies/0 returns all companies" do
+      company = company_fixture()
+      assert Customers.list_companies() == [company]
+    end
+
+    test "get_company!/1 returns the company with given id" do
+      company = company_fixture()
+      assert Customers.get_company!(company.id) == company
+    end
+
+    test "create_company/1 with valid data creates a company" do
+      assert {:ok, %Company{} = company} = Customers.create_company(@valid_attrs)
+      assert company.fantasy_name == "some fantasy_name"
+      assert company.name == "some name"
+      assert company.registration_number == "some registration_number"
+    end
+
+    test "create_company/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Customers.create_company(@invalid_attrs)
+    end
+
+    test "update_company/2 with valid data updates the company" do
+      company = company_fixture()
+      assert {:ok, %Company{} = company} = Customers.update_company(company, @update_attrs)
+      assert company.fantasy_name == "some updated fantasy_name"
+      assert company.name == "some updated name"
+      assert company.registration_number == "some updated registration_number"
+    end
+
+    test "update_company/2 with invalid data returns error changeset" do
+      company = company_fixture()
+      assert {:error, %Ecto.Changeset{}} = Customers.update_company(company, @invalid_attrs)
+      assert company == Customers.get_company!(company.id)
+    end
+
+    test "delete_company/1 deletes the company" do
+      company = company_fixture()
+      assert {:ok, %Company{}} = Customers.delete_company(company)
+      assert_raise Ecto.NoResultsError, fn -> Customers.get_company!(company.id) end
+    end
+
+    test "change_company/1 returns a company changeset" do
+      company = company_fixture()
+      assert %Ecto.Changeset{} = Customers.change_company(company)
+    end
+  end
 end
