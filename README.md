@@ -56,12 +56,16 @@
   ```bash
   $ mix test --cover
   ``` 
-
+## Using
+  * creating an user in IEx:
+  ```bash
+  $ FinancialOperationsElixir.Auth.create_user(%{email: "asd@asd.com", password: "qwerty"})
+  ``` 
 ## Deploy
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
 ## Releases
-* v1
+  * 
 
 ## License
 
