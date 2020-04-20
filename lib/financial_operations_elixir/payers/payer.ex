@@ -14,7 +14,7 @@ defmodule FinancialOperationsElixir.Payers.Payer do
   def changeset(payer, attrs) do
     payer
     |> cast(attrs, [:account_id])
-    # |> validate_required([:account_id])
-    # |> foreign_key_constraint(:account_id)
+    |> validate_required([:account_id])
+    |> foreign_key_constraint(:account_id)
   end
 end
