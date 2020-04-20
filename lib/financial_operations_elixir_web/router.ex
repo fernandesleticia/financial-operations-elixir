@@ -22,5 +22,6 @@ defmodule FinancialOperationsElixirWeb.Router do
   scope "/api", FinancialOperationsElixirWeb do
     pipe_through :api
     resources "/users", UserController, except: [:new, :edit]
+    resources "/transactions", TransactionController, except: [:new, :edit]
   end
 end
