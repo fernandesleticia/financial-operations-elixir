@@ -40,4 +40,25 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  ############### services ##############
+
+  # Create batch payment
+  def create_batch_payment(conn, %{"total_value"=>total_value, "currency_id"=>currency_id, "payer_id"=>payer_id, "payments"=>payments}) do
+    status = "open"
+
+    batch_payment_params = %{"total_value"=>total_value, "currency_id"=>currency_id, "payer_id"=>payer_id, "payments"=>payments, "status"=>status}
+    with {:ok, %BatchPayment{} = batch_payment} <- Batches.create_batch_payment(batch_payment_params) do
+      create_payments(payments)
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", Routes.batch_payment_path(conn, :show, batch_payment))
+      |> render("show.json", batch_payment: batch_payment)
+    end
+  end
+
+  # create payments
+  def create_payments(payments_drafts) do
+      IO.inspect payments_drafts
+  end
 end

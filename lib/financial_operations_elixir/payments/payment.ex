@@ -9,6 +9,7 @@ defmodule FinancialOperationsElixir.Payments.Payment do
     field :value, :float
     field :beneficiary_id, :binary_id
     field :transaction_id, :binary_id
+    field :batch_id, :binary_id
 
     timestamps()
   end
