@@ -14,7 +14,7 @@
 ## Dependencies
   * credo `~> 1.3` , found it at: https://github.com/rrrene/credo
   * bcrypt_elixir, `~> 2.0`, found it at: https://github.com/riverrun/bcrypt_elixir
-
+  * poison, '~> 4.0', found it at: https://github.com/devinus/poison
 ## Setup
   * Install dependencies
   ```bash

@@ -3,6 +3,8 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
 
   alias FinancialOperationsElixir.Batches
   alias FinancialOperationsElixir.Batches.BatchPayment
+  alias FinancialOperationsElixir.Payments
+  alias FinancialOperationsElixir.Payments.Payment
 
   action_fallback FinancialOperationsElixirWeb.FallbackController
 
@@ -42,14 +44,13 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
   end
 
   ############### services ##############
-
+  
   # Create batch payment
   def create_batch_payment(conn, %{"total_value"=>total_value, "currency_id"=>currency_id, "payer_id"=>payer_id, "payments"=>payments}) do
     status = "open"
-
     batch_payment_params = %{"total_value"=>total_value, "currency_id"=>currency_id, "payer_id"=>payer_id, "payments"=>payments, "status"=>status}
     with {:ok, %BatchPayment{} = batch_payment} <- Batches.create_batch_payment(batch_payment_params) do
-      create_payments(payments)
+      mount_payments(payments)
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.batch_payment_path(conn, :show, batch_payment))
@@ -57,8 +58,38 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
     end
   end
 
-  # create payments
-  def create_payments(payments_drafts) do
-      IO.inspect payments_drafts
+  #Payment struct
+  defmodule Payment do
+    defstruct tracking_code: "", value: 0.0, beneficiary_id: 0, transaction_id: 0, batch_id: 0 
   end
+
+  def payments(payments_drafts_json) do
+    Poison.decode!(payments_drafts_json, as: [%Payment{}])
+  end
+
+  def payments_params(payment_draft) do
+    %{"tracking_code"=>payment_draft.tracking_code, "value"=>payment_draft.value, "transaction_id"=>payment_draft.transaction_id, "beneficiary_id"=>payment_draft.beneficiary_id, "batch_id"=>payment_draft.batch_id}
+  end
+
+  # create payments
+  def create_payment(payment_draft) do
+    tracking_code = "ABC123" 
+    batch_id = System.unique_integer()
+    transaction_id = System.unique_integer()
+    beneficiary_id = System.unique_integer()
+    payment_draft = %{payment_draft | transaction_id: transaction_id, batch_id: batch_id, tracking_code: tracking_code, beneficiary_id: beneficiary_id}
+    
+    with {:ok, %Payment{} = payment} <- Payments.create_payment(payments_params(payment_draft)) do
+      IO.inspect payment
+    end 
+  end 
+
+  def mount_payments(payments_drafts_json) do
+    Enum.each(payments(payments_drafts_json), &create_payment/1)  
+  end
+
+  # utils
+  
+
+  
 end
