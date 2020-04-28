@@ -63,17 +63,17 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
     defstruct tracking_code: "", value: 0.0, beneficiary_id: 0, transaction_id: 0, batch_id: 0 
   end
 
-  def payments(payments_drafts_json) do
+  defp payments(payments_drafts_json) do
     Poison.decode!(payments_drafts_json, as: [%Payment{}])
   end
 
-  def payments_params(payment_draft) do
+  defp payments_params(payment_draft) do
     %{"tracking_code"=>payment_draft.tracking_code, "value"=>payment_draft.value, "transaction_id"=>payment_draft.transaction_id, "beneficiary_id"=>payment_draft.beneficiary_id, "batch_id"=>payment_draft.batch_id}
   end
 
   # create payments
-  def create_payment(payment_draft) do
-    tracking_code = "ABC123" 
+  defp create_payment(payment_draft) do
+    tracking_code = generate_code(10)
     batch_id = System.unique_integer()
     transaction_id = System.unique_integer()
     beneficiary_id = System.unique_integer()
@@ -84,12 +84,15 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
     end 
   end 
 
-  def mount_payments(payments_drafts_json) do
+  defp mount_payments(payments_drafts_json) do
     Enum.each(payments(payments_drafts_json), &create_payment/1)  
   end
 
   # utils
-  
-
-  
+  defp generate_code(length) do
+    length
+    |> :crypto.strong_rand_bytes
+    |> Base.encode64
+    |> binary_part(0, length)
+  end
 end
