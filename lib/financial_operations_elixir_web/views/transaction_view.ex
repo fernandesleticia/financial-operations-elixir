@@ -13,6 +13,8 @@ defmodule FinancialOperationsElixirWeb.TransactionView do
   def render("transaction.json", %{transaction: transaction}) do
     %{id: transaction.id,
       amount: transaction.amount,
-      payer_value_date: transaction.payer_value_date}
+      final_amount: transaction.final_amount,
+      payer_value_date: transaction.payer_value_date,
+      tracking_code: transaction.tracking_code}
   end
 end

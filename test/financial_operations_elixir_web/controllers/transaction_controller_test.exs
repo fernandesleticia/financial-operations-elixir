@@ -6,11 +6,15 @@ defmodule FinancialOperationsElixirWeb.TransactionControllerTest do
 
   @create_attrs %{
     amount: 120.5,
-    payer_value_date: ~D[2010-04-17]
+    final_amount: 200.4,
+    payer_value_date: ~D[2010-04-17],
+    tracking_code: "some tracking code"
   }
   @update_attrs %{
     amount: 456.7,
-    payer_value_date: ~D[2011-05-18]
+    final_amount: 700.4,
+    payer_value_date: ~D[2011-05-18],
+    tracking_code: "some updated tracking code"
   }
   @invalid_attrs %{amount: nil, payer_value_date: nil}
 
@@ -40,7 +44,9 @@ defmodule FinancialOperationsElixirWeb.TransactionControllerTest do
       assert %{
                "id" => id,
                "amount" => 120.5,
-               "payer_value_date" => "2010-04-17"
+               "final_amount" => 200.4,
+               "payer_value_date" => "2010-04-17",
+               "tracking_code" => "some tracking code"
              } = json_response(conn, 200)["data"]
     end
 
@@ -62,7 +68,9 @@ defmodule FinancialOperationsElixirWeb.TransactionControllerTest do
       assert %{
                "id" => id,
                "amount" => 456.7,
-               "payer_value_date" => "2011-05-18"
+               "final_amount" => 700.4,
+               "payer_value_date" => "2011-05-18",
+               "tracking_code" => "some updated tracking code"
              } = json_response(conn, 200)["data"]
     end
 

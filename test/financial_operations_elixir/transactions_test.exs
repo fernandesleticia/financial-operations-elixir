@@ -6,8 +6,8 @@ defmodule FinancialOperationsElixir.TransactionsTest do
   describe "transactions" do
     alias FinancialOperationsElixir.Transactions.Transaction
 
-    @valid_attrs %{amount: 120.5, payer_value_date: ~D[2010-04-17]}
-    @update_attrs %{amount: 456.7, payer_value_date: ~D[2011-05-18]}
+    @valid_attrs %{amount: 120.5, final_amount: 204.6, payer_value_date: ~D[2010-04-17], tracking_code: "some tracking code"}
+    @update_attrs %{amount: 456.7, final_amount: 700.6, payer_value_date: ~D[2011-05-18], tracking_code: "some updated tracking code"}
     @invalid_attrs %{amount: nil, payer_value_date: nil}
 
     def transaction_fixture(attrs \\ %{}) do

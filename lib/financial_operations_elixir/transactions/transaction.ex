@@ -6,9 +6,9 @@ defmodule FinancialOperationsElixir.Transactions.Transaction do
   @foreign_key_type :binary_id
   schema "transactions" do
     field :amount, :float
+    field :final_amount, :float
     field :payer_value_date, :date
-    field :currency_id, :binary_id
-    field :payer_id, :binary_id
+    field :tracking_code, :string
 
     timestamps()
   end
@@ -16,7 +16,7 @@ defmodule FinancialOperationsElixir.Transactions.Transaction do
   @doc false
   def changeset(transaction, attrs) do
     transaction
-    |> cast(attrs, [:amount, :payer_value_date])
-    |> validate_required([:amount, :payer_value_date])
+    |> cast(attrs, [:amount, :final_amount, :payer_value_date, :tracking_code])
+    |> validate_required([:amount, :final_amount, :payer_value_date, :tracking_code])
   end
 end
