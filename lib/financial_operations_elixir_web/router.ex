@@ -25,6 +25,8 @@ defmodule FinancialOperationsElixirWeb.Router do
     resources "/transactions", TransactionController, except: [:new, :edit]
     resources "/batch_payments", BatchPaymentController, except: [:new, :edit]
     resources "/payments", PaymentController, except: [:new, :edit]
+    resources "/currencies", CurrencyController, except: [:new, :edit]
+
 
     post "/batch/create_batch_payment", BatchPaymentController, :create_batch_payment
   end
