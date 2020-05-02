@@ -60,18 +60,27 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
       |> render("show.json", batch_payment: batch_payment)
     end
   end
+
+  # currency service
+  defp cambio(amount, currency_code) do
+    currency = 2 # call from api
+    amount*currency
+  end
   
   # transactions service
-  # defp transactions_params(payment) do
-  #   %{"tracking_code"=>payment.tracking_code, "amount"=>payment.value, "final_amount"=>final_amount, "payer_value_date"=>payer_value_date, "currency_id"=>currency_id, "account_id"=>account_id, "payer_id"=>payer_id}
-  # end
+  defp transactions_params(payment) do
+    final_amount = cambio(payment.value, "$") # get currebcy code from batch
+    currency_id = 1 #get currency id from batch
+    payer_id = 1 #get payer id from batch
+    account_id = 1 # get account id trougth beneficiary
+    payer_value_date = ~D[2010-04-17] # get date from batch(add to batch)
+    %{"tracking_code"=>payment.tracking_code, "amount"=>payment.value, "final_amount"=>final_amount, "payer_value_date"=>payer_value_date, "currency_id"=>currency_id, "account_id"=>account_id, "payer_id"=>payer_id}
+  end
 
   def create_transaction(payment) do
-    IO.inspect payment
-    
-    # with {:ok, %FinancialOperationsElixir.Transactions.Transaction{} = transaction} <-  Transactions.create_transaction(transaction_params) do
-    #   IO.inspect transaction
-    # end 
+    with {:ok, %FinancialOperationsElixir.Transactions.Transaction{} = transaction} <- transactions_params(payment) |> Transactions.create_transaction() do
+      IO.inspect transaction
+    end 
   end
 
   # payments service
