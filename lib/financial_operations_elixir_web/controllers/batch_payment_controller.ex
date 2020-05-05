@@ -7,6 +7,7 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
   alias FinancialOperationsElixir.Payments.Payment
   alias FinancialOperationsElixir.Transactions
   alias FinancialOperationsElixir.Transactions.Transaction
+  alias FinancialOperationsElixirWeb.Services.Currencies.Exchange
 
   action_fallback FinancialOperationsElixirWeb.FallbackController
 
@@ -47,6 +48,12 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
 
   ############### services ##############
   
+  # currency service
+  defp cambio(amount, currency_code) do
+    currency_rate = Exchange.rate(currency_code)
+    amount*currency_rate
+  end
+  
   # batches service
   # Create batch payment
   def create_batch_payment(conn, %{"total_value"=>total_value, "currency_id"=>currency_id, "payer_id"=>payer_id, "payments"=>payments}) do
@@ -61,15 +68,9 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
     end
   end
 
-  # currency service
-  defp cambio(amount, currency_code) do
-    currency = 2 # call from api
-    amount*currency
-  end
-  
   # transactions service
   defp transactions_params(payment) do
-    final_amount = cambio(payment.value, "$") # get currebcy code from batch
+    final_amount = cambio(payment.value, "USD") # get currebcy code from batch
     currency_id = 1 #get currency id from batch
     payer_id = 1 #get payer id from batch
     account_id = 1 # get account id trougth beneficiary

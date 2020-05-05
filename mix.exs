@@ -46,7 +46,8 @@ defmodule FinancialOperationsElixir.MixProject do
       {:credo, "~> 1.3", only: [:dev, :test], runtime: false},
       {:bcrypt_elixir, "~> 2.0"},
       {:faker, "~> 0.13", only: :test},
-      {:poison, "~> 4.0"}
+      {:poison, "~> 4.0"},
+      {:httpoison, "~> 1.6"}
     ]
   end
 
