@@ -48,10 +48,10 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
   ############### services ##############
   
   # currency service
-  defp cambio(amount, currency_code) do
-    currency_rate = Exchange.rate(currency_code)
-    amount*currency_rate
-  end
+  # defp cambio(amount, currency_code) do
+  #   currency_rate = Exchange.rate(currency_code)
+  #   amount*currency_rate
+  # end
   
   # batches service
   # Create batch payment
@@ -68,48 +68,18 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
   end
 
   # transactions service
-  defp transactions_params(payment) do
-    final_amount = cambio(payment.value, "USD") # get currebcy code from batch
-    currency_id = 1 #get currency id from batch
-    payer_id = 1 #get payer id from batch
-    account_id = 1 # get account id trougth beneficiary
-    payer_value_date = ~D[2010-04-17] # get date from batch(add to batch)
-    %{"tracking_code"=>payment.tracking_code, "amount"=>payment.value, "final_amount"=>final_amount, "payer_value_date"=>payer_value_date, "currency_id"=>currency_id, "account_id"=>account_id, "payer_id"=>payer_id}
-  end
-
-  def create_transaction(payment) do
-    with {:ok, %FinancialOperationsElixir.Transactions.Transaction{} = transaction} <- transactions_params(payment) |> Transactions.create_transaction() do
-      IO.inspect transaction
-    end 
-  end
-
-  # payments service
-  #Payment struct
-  # defmodule Payment do
-  #   defstruct tracking_code: "", value: 0.0, beneficiary_id: 0, transaction_id: 0, batch_id: 0 
+  # defp transactions_params(payment) do
+  #   final_amount = cambio(payment.value, "USD") # get currebcy code from batch
+  #   currency_id = 1 #get currency id from batch
+  #   payer_id = 1 #get payer id from batch
+  #   account_id = 1 # get account id trougth beneficiary
+  #   payer_value_date = ~D[2010-04-17] # get date from batch(add to batch)
+  #   %{"tracking_code"=>payment.tracking_code, "amount"=>payment.value, "final_amount"=>final_amount, "payer_value_date"=>payer_value_date, "currency_id"=>currency_id, "account_id"=>account_id, "payer_id"=>payer_id}
   # end
 
-  # defp payments(payments_drafts_json) do
-  #   Poison.decode!(payments_drafts_json, as: [%Payment{}])
-  # end
-
-  # defp payments_params(payment_draft) do
-  #   %{"tracking_code"=>payment_draft.tracking_code, "value"=>payment_draft.value, "transaction_id"=>payment_draft.transaction_id, "beneficiary_id"=>payment_draft.beneficiary_id, "batch_id"=>payment_draft.batch_id}
-  # end
-
-  # defp create_payment(payment_draft) do
-  #   tracking_code = GenerateCode.generate(10)
-  #   batch_id = System.unique_integer()
-  #   transaction_id = System.unique_integer()
-  #   beneficiary_id = System.unique_integer()
-  #   payment_draft = %{payment_draft | transaction_id: transaction_id, batch_id: batch_id, tracking_code: tracking_code, beneficiary_id: beneficiary_id}
-    
-  #   with {:ok, %FinancialOperationsElixir.Payments.Payment{} = payment} <- payments_params(payment_draft) |> Payments.create_payment() do
-  #     create_transaction(payment)
+  # def create_transaction(payment) do
+  #   with {:ok, %FinancialOperationsElixir.Transactions.Transaction{} = transaction} <- transactions_params(payment) |> Transactions.create_transaction() do
+  #     IO.inspect transaction
   #   end 
-  # end 
-
-  # defp mount_payments(payments_drafts_json) do
-  #   Enum.each(payments(payments_drafts_json), &create_payment/1)  
   # end
 end

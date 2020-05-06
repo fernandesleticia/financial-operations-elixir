@@ -1,6 +1,7 @@
 defmodule FinancialOperationsElixirWeb.Services.Payments.Create do
   alias FinancialOperationsElixir.Payments
   alias FinancialOperationsElixir.Payments.Payment
+  alias FinancialOperationsElixirWeb.Services.Transactions.Create
   alias FinancialOperationsElixirWeb.Services.Utils.GenerateCode
   
   defmodule Payment do
@@ -23,7 +24,7 @@ defmodule FinancialOperationsElixirWeb.Services.Payments.Create do
     payment_draft = %{payment_draft | transaction_id: transaction_id, batch_id: batch_id, tracking_code: tracking_code, beneficiary_id: beneficiary_id}
     
     with {:ok, %FinancialOperationsElixir.Payments.Payment{} = payment} <- payments_params(payment_draft) |> Payments.create_payment() do
-      # create_transaction(payment)
+      Create.create_transaction(payment)
     end 
   end 
 

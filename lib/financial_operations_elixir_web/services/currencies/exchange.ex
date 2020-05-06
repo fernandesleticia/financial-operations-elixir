@@ -1,4 +1,9 @@
 defmodule FinancialOperationsElixirWeb.Services.Currencies.Exchange do
+  def cambio(amount, currency_code) do
+    currency_rate = rate(currency_code)
+    amount*currency_rate
+  end
+
   def rate(currency_code) do
     rates = all_rates
     rates[currency_code]
