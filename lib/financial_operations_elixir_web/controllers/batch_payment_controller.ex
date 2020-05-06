@@ -8,6 +8,7 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
   alias FinancialOperationsElixir.Transactions
   alias FinancialOperationsElixir.Transactions.Transaction
   alias FinancialOperationsElixirWeb.Services.Currencies.Exchange
+  alias FinancialOperationsElixirWeb.Services.Utils.GenerateCode
 
   action_fallback FinancialOperationsElixirWeb.FallbackController
 
@@ -99,7 +100,7 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
   end
 
   defp create_payment(payment_draft) do
-    tracking_code = generate_code(10)
+    tracking_code = GenerateCode.generate(10)
     batch_id = System.unique_integer()
     transaction_id = System.unique_integer()
     beneficiary_id = System.unique_integer()
@@ -112,13 +113,5 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
 
   defp mount_payments(payments_drafts_json) do
     Enum.each(payments(payments_drafts_json), &create_payment/1)  
-  end
-
-  # utils service
-  defp generate_code(length) do
-    length
-    |> :crypto.strong_rand_bytes
-    |> Base.encode64
-    |> binary_part(0, length)
   end
 end

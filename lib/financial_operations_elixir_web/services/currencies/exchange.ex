@@ -1,5 +1,4 @@
 defmodule FinancialOperationsElixirWeb.Services.Currencies.Exchange do
-
   def rate(currency_code) do
     rates = all_rates
     rates[currency_code]
@@ -21,5 +20,4 @@ defmodule FinancialOperationsElixirWeb.Services.Currencies.Exchange do
         reason
     end
   end
-
 end
