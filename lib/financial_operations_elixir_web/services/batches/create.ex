@@ -9,10 +9,20 @@ defmodule FinancialOperationsElixirWeb.Services.Batches.CreateService do
     %{"status"=>status, "total_value"=>batch_draft["total_value"], "currency_id"=>batch_draft["currency_id"], "payer_id"=>batch_draft["payer_id"]}
   end
 
-  #def create_batch_payment(conn, %{"total_value"=>total_value, "currency_id"=>currency_id, "payer_id"=>payer_id, "payments"=>payments}) do
   def batch_payment(batch_draft) do
-    batch = batch_params(batch_draft) |> Batches.create_batch_payment()
-    Create.mount_payments(batch_draft["payments"])
-    batch 
+    batch_draft = Poison.decode!(batch_draft)
+    {:ok, %BatchPayment{} = batch} = batch_params(batch_draft) |> Batches.create_batch_payment()
+    create_payments(batch_draft["payments"], batch)
+    {:ok, batch}
+  end
+
+  defp create_payments(payments, batch) do
+    if has_payments(payments) do
+      Create.mount_payments(payments, batch)
+    end
+  end
+
+  defp has_payments(payments) do
+    unless payments == nil do true end
   end
 end

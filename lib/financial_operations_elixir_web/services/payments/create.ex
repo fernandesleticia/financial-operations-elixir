@@ -16,19 +16,18 @@ defmodule FinancialOperationsElixirWeb.Services.Payments.Create do
     %{"tracking_code"=>payment_draft.tracking_code, "value"=>payment_draft.value, "transaction_id"=>payment_draft.transaction_id, "beneficiary_id"=>payment_draft.beneficiary_id, "batch_id"=>payment_draft.batch_id}
   end
 
-  defp create_payment(payment_draft) do
+  defp create_payment(payment_draft, batch) do
     tracking_code = GenerateCode.generate(10)
-    batch_id = System.unique_integer()
+    batch_id = batch.id
     transaction_id = System.unique_integer()
     beneficiary_id = System.unique_integer()
-    payment_draft = %{payment_draft | transaction_id: transaction_id, batch_id: batch_id, tracking_code: tracking_code, beneficiary_id: beneficiary_id}
-    
+    payment_draft = %Payment{transaction_id: transaction_id, batch_id: batch_id, tracking_code: tracking_code, beneficiary_id: beneficiary_id}
     with {:ok, %FinancialOperationsElixir.Payments.Payment{} = payment} <- payments_params(payment_draft) |> Payments.create_payment() do
       Create.create_transaction(payment)
     end 
   end 
 
-  def mount_payments(payments_drafts_json) do
-    Enum.each(payments(payments_drafts_json), &create_payment/1)  
+  def mount_payments(payments_draft, batch) do
+    Enum.each(payments_draft, &create_payment(&1, batch))  
   end
 end

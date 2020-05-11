@@ -13,15 +13,6 @@ defmodule FinancialOperationsElixirWeb.BatchPaymentController do
   end
 
   def create(conn, %{"batch_payment" => batch_payment_params}) do
-    with {:ok, %BatchPayment{} = batch_payment} <- Batches.create_batch_payment(batch_payment_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.batch_payment_path(conn, :show, batch_payment))
-      |> render("show.json", batch_payment: batch_payment)
-    end
-  end
-
-  def create_batch(conn, batch_payment_params) do
     with {:ok, %BatchPayment{} = batch_payment} <- CreateService.batch_payment(batch_payment_params) do
       conn
       |> put_status(:created)
