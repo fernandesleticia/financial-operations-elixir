@@ -17,6 +17,6 @@ defmodule FinancialOperationsElixir.Transactions.Transaction do
   def changeset(transaction, attrs) do
     transaction
     |> cast(attrs, [:amount, :final_amount, :payer_value_date, :tracking_code])
-    |> validate_required([:amount, :final_amount, :payer_value_date, :tracking_code])
+    |> validate_required([:amount, :final_amount, :tracking_code])
   end
 end

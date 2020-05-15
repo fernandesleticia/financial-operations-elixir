@@ -16,7 +16,7 @@ defmodule FinancialOperationsElixir.Batches.BatchPayment do
   @doc false
   def changeset(batch_payment, attrs) do
     batch_payment
-    |> cast(attrs, [:total_value, :status])
+    |> cast(attrs, [:total_value, :status, :payer_id, :currency_id])
     |> validate_required([:total_value, :status])
   end
 end
