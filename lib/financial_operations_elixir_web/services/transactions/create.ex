@@ -12,7 +12,6 @@ defmodule FinancialOperationsElixirWeb.Services.Transactions.Create do
 
   def create_transaction(transaction_draft) do
     with {:ok, %FinancialOperationsElixir.Transactions.Transaction{} = transaction} <- transactions_params(transaction_draft) |> Transactions.create_transaction() do
-      IO.inspect transaction
       transaction
     end 
   end
